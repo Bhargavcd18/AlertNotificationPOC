@@ -1,0 +1,32 @@
+
+producer-harness/
+ ├── pom.xml
+ └── src/main/java/com/poc/ProducerHarness.java
+ 
+STEP 1 — Create Project Folder
+
+mkdir T1-03-producer-harness
+cd T1-03-producer-harness
+
+STEP 2 — Create Maven Project
+
+Run:
+
+mvn archetype:generate -DgroupId=com.poc -DartifactId=producer-harness -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+Go inside:
+
+cd producer-harness
+
+After java file and POM file updated.
+
+Run :
+
+mvn clean package
+
+After success.
+
+Run :
+
+mvn exec:java -Dexec.mainClass="com.poc.ProducerHarness"
+

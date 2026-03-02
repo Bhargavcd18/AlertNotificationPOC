@@ -1,0 +1,69 @@
+{
+  "sms_notifications": [
+    {
+      "scenarioId": "02",
+      "scenarioName": "Customer Successful Creation",
+      "domain": "Customer",
+      "alertType": "CUSTOMER_CREATED",
+      "eventType": "CustomerEvents-CustomerCreated_CU_ACTIVITY_EVENT",
+      "MessageType": "SMS",
+      "template": "POCBank: Welcome, {customer_name}! Your customer profile ****{customer_id_last4} is now active as of {timestamp}. For assistance, visit https://www.pocbank.com/info/contact-us",
+      "resolved": "POCBank: Welcome, Maria Santos! Your customer profile ****0002 is now active as of 2026-02-27T08:30:00.000+0000. For assistance, visit https://www.pocbank.com/info/contact-us",
+      "templateVariables": {
+        "{customer_name}": "Maria Santos",
+        "{customer_id_last4}": "0002",
+        "{timestamp}": "2026-02-27T08:30:00.000+0000"
+      }
+    },
+    {
+      "scenarioId": "03",
+      "scenarioName": "Lending Loan Disbursement Successful",
+      "domain": "Lending",
+      "alertType": "LOAN_DISBURSEMENT_SUCCESSFUL",
+      "eventType": "ArrangementEvents-LoanDisbursementSuccessful_AA_ACTIVITY_EVENT",
+      "MessageType": "SMS",
+      "template": "POCBank: Your loan has been disbursed—Php {amount} to account ****{loan_account_last4} on {timestamp}. Ref: {txn_ref}. Details: https://www.pocbank.com/info/contact-us",
+      "resolved": "POCBank: Your loan has been disbursed—Php 250000.00 to account ****K9X on 2026-02-27T08:30:00.000+0000. Ref: LNREF260001POCBK. Details: https://www.pocbank.com/info/contact-us",
+      "templateVariables": {
+        "{amount}": "250000.00",
+        "{loan_account_last4}": "K9X",
+        "{timestamp}": "2026-02-27T08:30:00.000+0000",
+        "{txn_ref}": "LNREF260001POCBK"
+      }
+    },
+    {
+      "scenarioId": "04",
+      "scenarioName": "Lending Past-Due Loan Reminder (90 Days)",
+      "domain": "Lending",
+      "alertType": "LOAN_PAST_DUE_REMINDER",
+      "eventType": "ArrangementEvents-LoanPastDueReminder_AA_ACTIVITY_EVENT",
+      "MessageType": "SMS",
+      "template": "POCBank: Your loan on ****{loan_account_last4} is {days_overdue} day(s) past due. Pay Php {min_amount_due} by {grace_date} to avoid penalties. Ref: {loan_ref}. Help: https://www.pocbank.com/info/contact-us",
+      "resolved": "POCBank: Your loan on ****BK4W is 90 day(s) past due. Pay Php 15000.00 by 2026-03-06 to avoid penalties. Ref: LNREF260001POCBK4W. Help: https://www.pocbank.com/info/contact-us",
+      "templateVariables": {
+        "{loan_account_last4}": "BK4W",
+        "{days_overdue}": "90",
+        "{min_amount_due}": "15000.00",
+        "{grace_date}": "2026-03-06",
+        "{loan_ref}": "LNREF260001POCBK4W"
+      }
+    },
+    {
+      "scenarioId": "05",
+      "scenarioName": "TPH Fund Transfer Successful",
+      "domain": "Payments",
+      "alertType": "FUND_TRANSFER_SUCCESSFUL",
+      "eventType": "PaymentEvents-FundTransferSuccessful_TPH_ACTIVITY_EVENT",
+      "MessageType": "SMS",
+      "template": "POCBank: Transfer successful—Php {amount} from ****{account_last4} to {beneficiary_masked} on {timestamp}. Ref: {txn_ref}. Help: https://www.pocbank.com/info/contact-us",
+      "resolved": "POCBank: Transfer successful—Php 5000.00 from ****K9X to ****BK8M on 2026-02-27T08:30:00.000+0000. Ref: TPHREF260001POCBK. Help: https://www.pocbank.com/info/contact-us",
+      "templateVariables": {
+        "{amount}": "5000.00",
+        "{account_last4}": "K9X",
+        "{beneficiary_masked}": "****BK8M",
+        "{timestamp}": "2026-02-27T08:30:00.000+0000",
+        "{txn_ref}": "TPHREF260001POCBK"
+      }
+    }
+  ]
+}

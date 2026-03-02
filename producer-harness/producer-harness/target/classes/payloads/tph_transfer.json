@@ -1,0 +1,75 @@
+{
+  "businessKey": "POCBank|PH0099001|TPHACT260001POCBK5V",
+  "aliasInfo": null,
+  "commandType": null,
+  "correlationId": null,
+  "dateTime": "2026-02-27T08:30:00.000+0000",
+  "deviceid": null,
+  "entityId": null,
+  "entityName": null,
+  "eventId": "e5f6a7b8-c9d0-1234-efab-345678901234",
+  "eventSourceId": "POCBank",
+  "headers": null,
+  "operation": null,
+  "operationInstanceId": null,
+  "organizationId": null,
+  "priority": null,
+  "sequenceInstanceId": null,
+  "sequenceNo": null,
+  "serviceRequestComment": null,
+  "serviceRequestId": null,
+  "sourceRequestIdentifier": null,
+  "sourceUri": "https://temenos.com/microservice/cloudevents/POCBank",
+  "status": "PROCESSED",
+  "subject": "event",
+  "tenantId": null,
+  "tracecontext": null,
+  "transactionDate": null,
+  "userId": null,
+  "businessObjects": null,
+  "eventType": "PaymentEvents-FundTransferSuccessful_TPH_ACTIVITY_EVENT",
+  "payload": {
+    "APPLICATIONCUSTOMERDetails": [
+      {
+        "applicationcustomerid": "300005",
+        "applicationcustomername1List": {
+          "applicationcustomername1": [
+            {
+              "applicationcustomername1": "Pedro Mendoza",
+              "language": "GB"
+            }
+          ]
+        }
+      }
+    ],
+    "eventCommon": {
+      "companyId": "PH0099001",
+      "application": "TPH.DIGI.PAYMENTS,PAYMENTS-FUND-TRANSFER-SUCCESS",
+      "creationTime": "2026-02-27T08:30:00.000Z",
+      "today": "2026-02-27",
+      "customCommon": {
+        "timeInLocal": "2026-02-27T16:30:00.000 Asia/Manila",
+        "ArrangementActivityReference": "TPHACT260001POCBK5V",
+        "ActivityContext": "User-Auth",
+        "ActivityStatus": "AUTH",
+        "ImmediateParentReference": "TPHACT260001POCBK5V",
+        "ParentReference": "TPHACT260001POCBK5V",
+        "Simulation": "NO",
+        "TransferAmount": "5000.00",
+        "TransferCurrency": "PHP",
+        "SenderAccount": "AAACT260001POCBK9X",
+        "ReceiverAccount": "AAACT260002POCBK8M",
+        "ReceiverName": "Rosa Mendoza",
+        "TransferType": "INSTAPAY",
+        "ReferenceNumber": "TPHREF260001POCBK"
+      },
+      "operator": "POCUSR00101",
+      "transactionStage": "TPH.ACT.AUTH.RTN"
+    },
+    "customFieldDetails": {
+      "MessageType": "BOTH",
+      "alertType": "FUND_TRANSFER_SUCCESSFUL",
+      "Release": "R25"
+    }
+  }
+}
