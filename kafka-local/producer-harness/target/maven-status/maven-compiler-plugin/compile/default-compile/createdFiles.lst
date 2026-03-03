@@ -1,0 +1,5 @@
+com\poc\ProducerHarness.class
+com\poc\health\CustomKafkaHealthIndicator.class
+com\poc\runner\StartupRunner.class
+com\poc\service\KafkaProducerService.class
+com\poc\ProducerHarnessApplication.class
