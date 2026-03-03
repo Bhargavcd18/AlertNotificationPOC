@@ -75,9 +75,10 @@ public class ProducerHarness {
         }
 
         String content = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-
+System.out.println("Hi Manas");
         return content
                 .replace("${customerId}", customerId)
                 .replace("${timestamp}", String.valueOf(System.currentTimeMillis()));
+
     }
 }

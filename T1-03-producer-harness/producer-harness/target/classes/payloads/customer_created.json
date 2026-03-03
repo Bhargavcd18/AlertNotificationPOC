@@ -1,8 +1,68 @@
 {
-  "eventType": "customer_created",
-  "customerId": "${customerId}",
-  "customerName": "Ravi Kumar",
-  "mobile": "9876543210",
-  "email": "ravi@example.com",
-  "createdAt": "${timestamp}"
+  "businessKey": "POCBank|PH0099001|CUSTACT260001POCBK7Y",
+  "aliasInfo": null,
+  "commandType": null,
+  "correlationId": null,
+  "dateTime": "2026-02-27T08:30:00.000+0000",
+  "deviceid": null,
+  "entityId": null,
+  "entityName": null,
+  "eventId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+  "eventSourceId": "POCBank",
+  "headers": null,
+  "operation": null,
+  "operationInstanceId": null,
+  "organizationId": null,
+  "priority": null,
+  "sequenceInstanceId": null,
+  "sequenceNo": null,
+  "serviceRequestComment": null,
+  "serviceRequestId": null,
+  "sourceRequestIdentifier": null,
+  "sourceUri": "https://temenos.com/microservice/cloudevents/POCBank",
+  "status": "PROCESSED",
+  "subject": "event",
+  "tenantId": null,
+  "tracecontext": null,
+  "transactionDate": null,
+  "userId": null,
+  "businessObjects": null,
+  "eventType": "CustomerEvents-CustomerCreated_CU_ACTIVITY_EVENT",
+  "payload": {
+    "APPLICATIONCUSTOMERDetails": [
+      {
+        "applicationcustomerid": "300002",
+        "applicationcustomername1List": {
+          "applicationcustomername1": [
+            {
+              "applicationcustomername1": "Maria Santos",
+              "language": "GB"
+            }
+          ]
+        }
+      }
+    ],
+    "eventCommon": {
+      "companyId": "PH0099001",
+      "application": "CRM.DIGI.CUSTOMER,CUSTOMER-CREATION-SUCCESS",
+      "creationTime": "2026-02-27T08:30:00.000Z",
+      "today": "2026-02-27",
+      "customCommon": {
+        "timeInLocal": "2026-02-27T16:30:00.000 Asia/Manila",
+        "ArrangementActivityReference": "CUSTACT260001POCBK7Y",
+        "ActivityContext": "User-Auth",
+        "ActivityStatus": "AUTH",
+        "ImmediateParentReference": "CUSTACT260001POCBK7Y",
+        "ParentReference": "CUSTACT260001POCBK7Y",
+        "Simulation": "NO"
+      },
+      "operator": "POCUSR00101",
+      "transactionStage": "CU.ACT.AUTH.RTN"
+    },
+    "customFieldDetails": {
+      "MessageType": "BOTH",
+      "alertType": "CUSTOMER_CREATED",
+      "Release": "R25"
+    }
+  }
 }

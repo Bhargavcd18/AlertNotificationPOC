@@ -1,8 +1,73 @@
 {
-  "eventType": "loan_disbursed",
-  "customerId": "${customerId}",
-  "loanId": "LN789456",
-  "amount": 250000,
-  "tenureMonths": 36,
-  "disbursedAt": "${timestamp}"
+  "businessKey": "POCBank|PH0099001|LNACT260001POCBK3Z",
+  "aliasInfo": null,
+  "commandType": null,
+  "correlationId": null,
+  "dateTime": "2026-02-27T08:30:00.000+0000",
+  "deviceid": null,
+  "entityId": null,
+  "entityName": null,
+  "eventId": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+  "eventSourceId": "POCBank",
+  "headers": null,
+  "operation": null,
+  "operationInstanceId": null,
+  "organizationId": null,
+  "priority": null,
+  "sequenceInstanceId": null,
+  "sequenceNo": null,
+  "serviceRequestComment": null,
+  "serviceRequestId": null,
+  "sourceRequestIdentifier": null,
+  "sourceUri": "https://temenos.com/microservice/cloudevents/POCBank",
+  "status": "PROCESSED",
+  "subject": "event",
+  "tenantId": null,
+  "tracecontext": null,
+  "transactionDate": null,
+  "userId": null,
+  "businessObjects": null,
+  "eventType": "ArrangementEvents-LoanDisbursementSuccessful_AA_ACTIVITY_EVENT",
+  "payload": {
+    "APPLICATIONCUSTOMERDetails": [
+      {
+        "applicationcustomerid": "300003",
+        "applicationcustomername1List": {
+          "applicationcustomername1": [
+            {
+              "applicationcustomername1": "Jose Reyes",
+              "language": "GB"
+            }
+          ]
+        }
+      }
+    ],
+    "eventCommon": {
+      "companyId": "PH0099001",
+      "application": "LENDING.DIGI.LOANS,LENDING-DISBURSEMENT-SUCCESS",
+      "creationTime": "2026-02-27T08:30:00.000Z",
+      "today": "2026-02-27",
+      "customCommon": {
+        "timeInLocal": "2026-02-27T16:30:00.000 Asia/Manila",
+        "ArrangementActivityReference": "LNACT260001POCBK3Z",
+        "ActivityContext": "User-Auth",
+        "ActivityStatus": "AUTH",
+        "ImmediateParentReference": "LNACT260001POCBK3Z",
+        "ParentReference": "LNACT260001POCBK3Z",
+        "Simulation": "NO",
+        "LoanAmount": "250000.00",
+        "LoanCurrency": "PHP",
+        "DisbursementAccount": "AAACT260001POCBK9X",
+        "LoanTerm": "36",
+        "LoanTermUnit": "MONTHS"
+      },
+      "operator": "POCUSR00101",
+      "transactionStage": "AA.ACT.AUTH.RTN"
+    },
+    "customFieldDetails": {
+      "MessageType": "BOTH",
+      "alertType": "LOAN_DISBURSEMENT_SUCCESSFUL",
+      "Release": "R25"
+    }
+  }
 }

@@ -1,8 +1,74 @@
 {
-  "eventType": "past_due",
-  "customerId": "${customerId}",
-  "loanId": "LN789456",
-  "dueAmount": 15000,
-  "dueDate": "2026-03-01",
-  "generatedAt": "${timestamp}"
+  "businessKey": "POCBank|PH0099001|LNACT260001POCBK4W",
+  "aliasInfo": null,
+  "commandType": null,
+  "correlationId": null,
+  "dateTime": "2026-02-27T08:30:00.000+0000",
+  "deviceid": null,
+  "entityId": null,
+  "entityName": null,
+  "eventId": "d4e5f6a7-b8c9-0123-defa-234567890123",
+  "eventSourceId": "POCBank",
+  "headers": null,
+  "operation": null,
+  "operationInstanceId": null,
+  "organizationId": null,
+  "priority": null,
+  "sequenceInstanceId": null,
+  "sequenceNo": null,
+  "serviceRequestComment": null,
+  "serviceRequestId": null,
+  "sourceRequestIdentifier": null,
+  "sourceUri": "https://temenos.com/microservice/cloudevents/POCBank",
+  "status": "PROCESSED",
+  "subject": "event",
+  "tenantId": null,
+  "tracecontext": null,
+  "transactionDate": null,
+  "userId": null,
+  "businessObjects": null,
+  "eventType": "ArrangementEvents-LoanPastDueReminder_AA_ACTIVITY_EVENT",
+  "payload": {
+    "APPLICATIONCUSTOMERDetails": [
+      {
+        "applicationcustomerid": "300004",
+        "applicationcustomername1List": {
+          "applicationcustomername1": [
+            {
+              "applicationcustomername1": "Ana Villanueva",
+              "language": "GB"
+            }
+          ]
+        }
+      }
+    ],
+    "eventCommon": {
+      "companyId": "PH0099001",
+      "application": "LENDING.DIGI.LOANS,LENDING-PASTDUE-REMINDER",
+      "creationTime": "2026-02-27T08:30:00.000Z",
+      "today": "2026-02-27",
+      "customCommon": {
+        "timeInLocal": "2026-02-27T16:30:00.000 Asia/Manila",
+        "ArrangementActivityReference": "LNACT260001POCBK4W",
+        "ActivityContext": "User-Auth",
+        "ActivityStatus": "AUTH",
+        "ImmediateParentReference": "LNACT260001POCBK4W",
+        "ParentReference": "LNACT260001POCBK4W",
+        "Simulation": "NO",
+        "PastDueDays": "90",
+        "OverdueAmount": "15000.00",
+        "OverdueCurrency": "PHP",
+        "DueDate": "2025-11-29",
+        "PenaltyCharges": "4500.00"
+      },
+      "operator": "POCUSR00101",
+      "transactionStage": "AA.ACT.AUTH.RTN"
+    },
+    "customFieldDetails": {
+      "MessageType": "BOTH",
+      "alertType": "LOAN_PAST_DUE_REMINDER",
+      "PastDueDays": "90",
+      "Release": "R25"
+    }
+  }
 }

@@ -1,1 +1,4 @@
 com\poc\ProducerHarness.class
+com\poc\NotificationConsumerApplication.class
+com\poc\config\KafkaConsumerConfig.class
+com\poc\notification\consumer\NotificationConsumer.class

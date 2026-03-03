@@ -1,8 +1,68 @@
 {
-  "eventType": "account_created",
-  "customerId": "${customerId}",
-  "accountNumber": "ACC123456",
-  "accountType": "SAVINGS",
-  "balance": 50000,
-  "createdAt": "${timestamp}"
+  "businessKey": "POCBank|PH0099001|AAACT260001POCBK9X",
+  "aliasInfo": null,
+  "commandType": null,
+  "correlationId": null,
+  "dateTime": "2026-02-27T08:30:00.000+0000",
+  "deviceid": null,
+  "entityId": null,
+  "entityName": null,
+  "eventId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "eventSourceId": "POCBank",
+  "headers": null,
+  "operation": null,
+  "operationInstanceId": null,
+  "organizationId": null,
+  "priority": null,
+  "sequenceInstanceId": null,
+  "sequenceNo": null,
+  "serviceRequestComment": null,
+  "serviceRequestId": null,
+  "sourceRequestIdentifier": null,
+  "sourceUri": "https://temenos.com/microservice/cloudevents/POCBank",
+  "status": "PROCESSED",
+  "subject": "event",
+  "tenantId": null,
+  "tracecontext": null,
+  "transactionDate": null,
+  "userId": null,
+  "businessObjects": null,
+  "eventType": "ArrangementEvents-AccountCreated_AA_ACTIVITY_EVENT",
+  "payload": {
+    "APPLICATIONCUSTOMERDetails": [
+      {
+        "applicationcustomerid": "300001",
+        "applicationcustomername1List": {
+          "applicationcustomername1": [
+            {
+              "applicationcustomername1": "Juan dela Cruz",
+              "language": "GB"
+            }
+          ]
+        }
+      }
+    ],
+    "eventCommon": {
+      "companyId": "PH0099001",
+      "application": "SDA.DIGI.ACCOUNTS,ACCOUNTS-CREATION-SUCCESS",
+      "creationTime": "2026-02-27T08:30:00.000Z",
+      "today": "2026-02-27",
+      "customCommon": {
+        "timeInLocal": "2026-02-27T16:30:00.000 Asia/Manila",
+        "ArrangementActivityReference": "AAACT260001POCBK9X",
+        "ActivityContext": "User-Auth",
+        "ActivityStatus": "AUTH",
+        "ImmediateParentReference": "AAACT260001POCBK9X",
+        "ParentReference": "AAACT260001POCBK9X",
+        "Simulation": "NO"
+      },
+      "operator": "POCUSR00101",
+      "transactionStage": "AA.ACT.AUTH.RTN"
+    },
+    "customFieldDetails": {
+      "MessageType": "BOTH",
+      "alertType": "ACCOUNT_CREATED",
+      "Release": "R25"
+    }
+  }
 }
