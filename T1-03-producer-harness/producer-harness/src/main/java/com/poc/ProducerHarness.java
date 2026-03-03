@@ -33,6 +33,7 @@ public class ProducerHarness {
         sendEvent(producer, "5004", "past_due", "email", "past_due.json");
         sendEvent(producer, "5005", "tph_transfer", "sms", "tph_transfer.json");
 
+
         producer.flush();
         producer.close();
 
