@@ -3,9 +3,11 @@ package com.poc.consumer.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,11 @@ public class NotificationConsumer {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
     // MAIN LISTENER WITH RETRY
+
     @RetryableTopic(
             attempts = "3",
             backoff = @Backoff(delay = 5000),
@@ -29,24 +35,24 @@ public class NotificationConsumer {
     )
     @KafkaListener(
             topics = "notifications.events",
-            groupId = "notification-poc-group"
+            groupId = "notification-router-group"
     )
     public void consume(String payload) {
 
         try {
 
-            log.info("Message received from main topic");
+            log.info("📥 Router received message");
 
-            // Store RAW message before enrichment
+            // Store RAW producer message
             storeRawMessage(payload);
 
-            // Enrich JSON
             ObjectNode rootNode =
                     (ObjectNode) objectMapper.readTree(payload);
 
             String businessKey =
                     rootNode.path("businessKey").asText();
 
+            // Add enrichment fields
             rootNode.put("canonicalKey_SMS", businessKey + "|SMS");
             rootNode.put("canonicalKey_Email", businessKey + "|EMAIL");
 
@@ -57,52 +63,70 @@ public class NotificationConsumer {
             // Log enriched message
             log.info("Enriched Message:\n{}", enrichedMessage);
 
-            // Store enriched message in file
-            storeEnrichedMessage(enrichedMessage);
+            // Extract MessageType
+            String messageType =
+                    rootNode
+                            .path("payload")
+                            .path("customFieldDetails")
+                            .path("MessageType")
+                            .asText();
 
-            log.info("Message processed successfully with enrichment.");
+            log.info("MessageType detected: {}", messageType);
+
+            // Routing logic
+            if ("BOTH".equalsIgnoreCase(messageType)) {
+                storeSmsMessage(enrichedMessage);
+                storeEmailMessage(enrichedMessage);
+                kafkaTemplate.send("notifications.sms", enrichedMessage);
+                kafkaTemplate.send("notifications.email", enrichedMessage);
+
+                log.info("➡ Routed to BOTH SMS and EMAIL topics");
+
+            } else if ("SMS".equalsIgnoreCase(messageType)) {
+                storeSmsMessage(enrichedMessage);
+                kafkaTemplate.send("notifications.sms", enrichedMessage);
+
+                log.info("➡ Routed to SMS topic only");
+
+            } else if ("EMAIL".equalsIgnoreCase(messageType)) {
+                storeEmailMessage(enrichedMessage);
+                kafkaTemplate.send("notifications.email", enrichedMessage);
+
+                log.info("➡ Routed to EMAIL topic only");
+
+            } else {
+
+                log.warn("Unknown MessageType: {}", messageType);
+            }
 
         } catch (Exception e) {
 
-            log.error("Processing failed. Triggering retry...", e);
+            log.error("Processing failed, triggering retry", e);
 
-            // IMPORTANT: Throw exception to trigger retry
             throw new RuntimeException(e);
         }
     }
 
-    // ===============================
-    // DLT HANDLER (QUARANTINE ZONE)
-    // ===============================
+    // DLT HANDLER
+
     @DltHandler
     public void handleDlt(String payload) {
 
         try {
 
-            log.error("Message moved to DLT after all retries exhausted.");
+            log.error("Message moved to DLT after retries exhausted");
 
-            String quarantineLog =
-                    "================ DLT EVENT =================\n" +
-                            "Moved At: " + LocalDateTime.now() + "\n" +
-                            payload + "\n\n";
-
-            Files.writeString(
-                    Path.of("quarantine-events.log"),
-                    quarantineLog,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND
-            );
-
-            log.error("Failed message stored in quarantine file.");
+            // Store failed message
+            storeDltMessage(payload);
 
         } catch (Exception e) {
+
             log.error("Failed to store DLT message", e);
         }
     }
 
-    // ===============================
-    // RAW EVENT STORAGE
-    // ===============================
+    // STORE RAW PRODUCER MESSAGE
+
     private void storeRawMessage(String payload) throws Exception {
 
         String logEntry =
@@ -116,27 +140,59 @@ public class NotificationConsumer {
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
         );
-
-        log.info("Raw event stored successfully.");
+        log.info("raw message stored in raw-events file successfully.");
     }
 
-    // ===============================
-    // ENRICHED EVENT STORAGE
-    // ===============================
-    private void storeEnrichedMessage(String enrichedMessage) throws Exception {
+        private void storeSmsMessage(String payload) throws Exception {
+
+            String logEntry =
+                    "================ RAW EVENT =================\n" +
+                            "Received At: " + LocalDateTime.now() + "\n" +
+                            payload + "\n\n";
+
+            Files.writeString(
+                    Path.of("sms-events.log"),
+                    logEntry,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+            );
+
+        log.info("producer message stored in SMS consumer group successfully.");
+    }
+
+        private void storeEmailMessage(String payload) throws Exception {
+
+            String logEntry =
+                    "================ RAW EVENT =================\n" +
+                            "Received At: " + LocalDateTime.now() + "\n" +
+                            payload + "\n\n";
+
+            Files.writeString(
+                    Path.of("email-events.log"),
+                    logEntry,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+            );
+
+            log.info("producer message stored in EMAIL consumer group successfully.");
+        }
+
+    // STORE DLT MESSAGE
+
+    private void storeDltMessage(String payload) throws Exception {
 
         String logEntry =
-                "================ ENRICHED EVENT =================\n" +
-                        "Processed At: " + LocalDateTime.now() + "\n" +
-                        enrichedMessage + "\n\n";
+                "================ DLT EVENT =================\n" +
+                        "Moved To DLT At: " + LocalDateTime.now() + "\n" +
+                        payload + "\n\n";
 
         Files.writeString(
-                Path.of("enriched-events.log"),
+                Path.of("dlt-events.log"),
                 logEntry,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
         );
 
-        log.info("Enriched event stored successfully.");
+        log.error("DLT message stored in dlt-events.log");
     }
 }

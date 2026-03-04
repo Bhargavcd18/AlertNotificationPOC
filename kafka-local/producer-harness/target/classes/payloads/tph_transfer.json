@@ -67,9 +67,10 @@
       "transactionStage": "TPH.ACT.AUTH.RTN"
     },
     "customFieldDetails": {
-      "MessageType": "BOTH",
+      "MessageType": "SMS",
       "alertType": "FUND_TRANSFER_SUCCESSFUL",
-      "Release": "R25"
+      "Release": "R25",
+      "originatingsource": "TPH"
     }
   }
 }

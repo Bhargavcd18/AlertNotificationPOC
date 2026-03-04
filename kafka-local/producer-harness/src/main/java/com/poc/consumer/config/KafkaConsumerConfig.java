@@ -36,7 +36,7 @@ public class KafkaConsumerConfig {
 
         config.put(
                 ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,
-                "earliest");
+                "latest");
 
         return new DefaultKafkaConsumerFactory<>(config);
     }

@@ -60,9 +60,10 @@
       "transactionStage": "CU.ACT.AUTH.RTN"
     },
     "customFieldDetails": {
-      "MessageType": "BOTH",
+      "MessageType": "EMAIL",
       "alertType": "CUSTOMER_CREATED",
-      "Release": "R25"
+      "Release": "R25",
+      "originatingsource": null
     }
   }
 }

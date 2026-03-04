@@ -1,8 +1,10 @@
 com\poc\ProducerHarness.class
 com\poc\health\CustomKafkaHealthIndicator.class
 com\poc\consumer\config\KafkaConsumerConfig.class
+com\poc\consumer\service\EmailNotificationConsumer.class
 com\poc\runner\StartupRunner.class
 com\poc\service\KafkaProducerService.class
 com\poc\consumer\NotificationConsumerApplication.class
 com\poc\consumer\service\NotificationConsumer.class
+com\poc\consumer\service\SmsNotificationConsumer.class
 com\poc\ProducerHarnessApplication.class

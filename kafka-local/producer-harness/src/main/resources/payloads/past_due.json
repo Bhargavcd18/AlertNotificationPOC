@@ -65,10 +65,11 @@
       "transactionStage": "AA.ACT.AUTH.RTN"
     },
     "customFieldDetails": {
-      "MessageType": "BOTH",
+      "MessageType": "SMS",
       "alertType": "LOAN_PAST_DUE_REMINDER",
       "PastDueDays": "90",
-      "Release": "R25"
+      "Release": "R25",
+      "originatingsource": null
     }
   }
 }

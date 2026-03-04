@@ -2,6 +2,8 @@ C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\consumer\No
 C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\service\KafkaProducerService.java
 C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\consumer\service\NotificationConsumer.java
 C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\consumer\config\KafkaConsumerConfig.java
+C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\consumer\service\EmailNotificationConsumer.java
+C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\consumer\service\SmsNotificationConsumer.java
 C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\ProducerHarness.java
 C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\runner\StartupRunner.java
 C:\Users\Dell\POC\kafka-local\producer-harness\src\main\java\com\poc\health\CustomKafkaHealthIndicator.java

@@ -60,9 +60,10 @@
       "transactionStage": "AA.ACT.AUTH.RTN"
     },
     "customFieldDetails": {
-      "MessageType": "BOTH",
+      "MessageType": "SMS",
       "alertType": "ACCOUNT_CREATED",
-      "Release": "R25"
+      "Release": "R25",
+      "originatingsource": null
     }
   }
 }
