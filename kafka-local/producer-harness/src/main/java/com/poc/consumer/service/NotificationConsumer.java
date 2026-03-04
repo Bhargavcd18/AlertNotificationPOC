@@ -21,9 +21,7 @@ public class NotificationConsumer {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // ===============================
     // MAIN LISTENER WITH RETRY
-    // ===============================
     @RetryableTopic(
             attempts = "3",
             backoff = @Backoff(delay = 5000),
@@ -39,10 +37,10 @@ public class NotificationConsumer {
 
             log.info("Message received from main topic");
 
-            // ✅ 1️⃣ Store RAW message before enrichment
+            // Store RAW message before enrichment
             storeRawMessage(payload);
 
-            // ✅ 2️⃣ Enrich JSON
+            // Enrich JSON
             ObjectNode rootNode =
                     (ObjectNode) objectMapper.readTree(payload);
 
@@ -51,6 +49,16 @@ public class NotificationConsumer {
 
             rootNode.put("canonicalKey_SMS", businessKey + "|SMS");
             rootNode.put("canonicalKey_Email", businessKey + "|EMAIL");
+
+            String enrichedMessage =
+                    objectMapper.writerWithDefaultPrettyPrinter()
+                            .writeValueAsString(rootNode);
+
+            // Log enriched message
+            log.info("Enriched Message:\n{}", enrichedMessage);
+
+            // Store enriched message in file
+            storeEnrichedMessage(enrichedMessage);
 
             log.info("Message processed successfully with enrichment.");
 
@@ -110,5 +118,25 @@ public class NotificationConsumer {
         );
 
         log.info("Raw event stored successfully.");
+    }
+
+    // ===============================
+    // ENRICHED EVENT STORAGE
+    // ===============================
+    private void storeEnrichedMessage(String enrichedMessage) throws Exception {
+
+        String logEntry =
+                "================ ENRICHED EVENT =================\n" +
+                        "Processed At: " + LocalDateTime.now() + "\n" +
+                        enrichedMessage + "\n\n";
+
+        Files.writeString(
+                Path.of("enriched-events.log"),
+                logEntry,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+        );
+
+        log.info("Enriched event stored successfully.");
     }
 }
