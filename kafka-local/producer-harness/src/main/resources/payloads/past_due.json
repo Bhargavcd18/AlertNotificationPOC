@@ -69,7 +69,19 @@
       "alertType": "LOAN_PAST_DUE_REMINDER",
       "PastDueDays": "90",
       "Release": "R25",
-      "originatingsource": null
+      "originatingsource": null,
+      "customer_id": "1030430005",
+      "customer_name": "Rishi Mendoza",
+      "timestamp": "2026-02-27T08:30:00Z",
+      "amount": "5000.00",
+      "loan_account": "1235567890",
+      "txn_ref": "TPHREF760001POCBK",
+      "days_overdue": "12",
+      "min_amount_due": "1500.00",
+      "grace_date": "2027-03-10",
+      "loan_ref": "LNRRF260001POCBK",
+      "beneficiary_name": "Rosa Maduro",
+      "beneficiary_id": "AAACT260002POCBK8M"
     }
   }
 }

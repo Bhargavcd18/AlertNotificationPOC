@@ -68,7 +68,19 @@
       "MessageType": "EMAIL",
       "alertType": "LOAN_DISBURSEMENT_SUCCESSFUL",
       "Release": "R25",
-      "originatingsource": null
+      "originatingsource": null,
+      "customer_id": "1000231005",
+      "customer_name": "Nitesh",
+      "timestamp": "2026-02-27T08:30:00Z",
+      "amount": "5000.00",
+      "loan_account": "1237567890",
+      "txn_ref": "TPHREF260000POCBK",
+      "days_overdue": "12",
+      "min_amount_due": "1500.00",
+      "grace_date": "2027-03-10",
+      "loan_ref": "LNREF260801POCBK",
+      "beneficiary_name": "Rosa Mary",
+      "beneficiary_id": "AAACT360802POCBK8M"
     }
   }
 }

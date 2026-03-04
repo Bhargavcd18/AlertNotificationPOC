@@ -67,10 +67,22 @@
       "transactionStage": "TPH.ACT.AUTH.RTN"
     },
     "customFieldDetails": {
-      "MessageType": "SMS",
+      "MessageType": "BOTH",
       "alertType": "FUND_TRANSFER_SUCCESSFUL",
       "Release": "R25",
-      "originatingsource": "TPH"
+      "originatingsource": "TPH",
+      "customer_id": "1000230005",
+      "customer_name": "Marco Mendoza",
+      "timestamp": "2026-02-27T08:30:00Z",
+      "amount": "5000.00",
+      "loan_account": "123450",
+      "txn_ref": "TPHREF260001POCBK",
+      "days_overdue": "12",
+      "min_amount_due": "1500.00",
+      "grace_date": "2027-03-10",
+      "loan_ref": "LNREF260001POCBK",
+      "beneficiary_name": "Rosa Mendoza",
+      "beneficiary_id": "AAACT260002POCBK8M"
     }
   }
 }

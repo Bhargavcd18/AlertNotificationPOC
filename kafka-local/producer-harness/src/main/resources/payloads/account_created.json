@@ -63,7 +63,19 @@
       "MessageType": "SMS",
       "alertType": "ACCOUNT_CREATED",
       "Release": "R25",
-      "originatingsource": null
+      "originatingsource": null,
+      "customer_id": "1000230085",
+      "customer_name": "Manas",
+      "timestamp": "2026-02-27T08:30:00Z",
+      "amount": "5000.00",
+      "loan_account": "123456",
+      "txn_ref": "TPHREF260001PACBQ",
+      "days_overdue": "12",
+      "min_amount_due": "1500.00",
+      "grace_date": "2027-03-10",
+      "loan_ref": "LNREF360001POCBK",
+      "beneficiary_name": "Rosa Mendoza",
+      "beneficiary_id": "AAACT260002POCBC8M"
     }
   }
 }

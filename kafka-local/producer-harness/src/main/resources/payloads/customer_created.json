@@ -63,7 +63,19 @@
       "MessageType": "EMAIL",
       "alertType": "CUSTOMER_CREATED",
       "Release": "R25",
-      "originatingsource": null
+      "originatingsource": null,
+      "customer_id": "1000230205",
+      "customer_name": "Shubham Gupta",
+      "timestamp": "2026-02-27T08:30:00Z",
+      "amount": "5000.00",
+      "loan_account": "1237567890",
+      "txn_ref": "TPHREF260001POCBK",
+      "days_overdue": "12",
+      "min_amount_due": "1500.00",
+      "grace_date": "2027-03-10",
+      "loan_ref": "LNREF268001POCBK",
+      "beneficiary_name": "Maruthi",
+      "beneficiary_id": "AAACT269002POCBK8M"
     }
   }
 }
