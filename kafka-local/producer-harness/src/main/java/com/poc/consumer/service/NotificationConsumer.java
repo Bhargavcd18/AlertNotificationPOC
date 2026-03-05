@@ -1,7 +1,9 @@
 package com.poc.consumer.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.poc.consumer.validation.ConsumerValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.DltHandler;
@@ -26,6 +28,7 @@ public class NotificationConsumer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+
     // MAIN LISTENER WITH RETRY
 
     @RetryableTopic(
@@ -49,6 +52,27 @@ public class NotificationConsumer {
             ObjectNode rootNode =
                     (ObjectNode) objectMapper.readTree(payload);
 
+            // Extract custom fields
+            JsonNode customFields = rootNode
+                    .path("payload")
+                    .path("customFieldDetails");
+
+            // VALIDATION STEP
+            try {
+
+                ConsumerValidator.validate(customFields);
+
+                log.info("Validation successful");
+
+            } catch (Exception validationError) {
+
+                log.error("Validation failed: {}", validationError.getMessage());
+
+                storeDltMessage(payload + "\nValidation Error: " + validationError.getMessage());
+
+                return;
+            }
+
             String businessKey =
                     rootNode.path("businessKey").asText();
 
@@ -57,10 +81,10 @@ public class NotificationConsumer {
             rootNode.put("canonicalKey_Email", businessKey + "|EMAIL");
 
             String enrichedMessage =
-                    objectMapper.writerWithDefaultPrettyPrinter()
+                    objectMapper
+                            .writerWithDefaultPrettyPrinter()
                             .writeValueAsString(rootNode);
 
-            // Log enriched message
             log.info("Enriched Message:\n{}", enrichedMessage);
 
             // Extract MessageType
@@ -73,39 +97,56 @@ public class NotificationConsumer {
 
             log.info("MessageType detected: {}", messageType);
 
-            // Routing logic
+            // ROUTING LOGIC
+
             if ("BOTH".equalsIgnoreCase(messageType)) {
+
                 storeSmsMessage(enrichedMessage);
                 storeEmailMessage(enrichedMessage);
+
                 kafkaTemplate.send("notifications.sms", enrichedMessage);
                 kafkaTemplate.send("notifications.email", enrichedMessage);
 
                 log.info("➡ Routed to BOTH SMS and EMAIL topics");
 
-            } else if ("SMS".equalsIgnoreCase(messageType)) {
+            }
+
+            else if ("SMS".equalsIgnoreCase(messageType)) {
+
                 storeSmsMessage(enrichedMessage);
+
                 kafkaTemplate.send("notifications.sms", enrichedMessage);
 
                 log.info("➡ Routed to SMS topic only");
 
-            } else if ("EMAIL".equalsIgnoreCase(messageType)) {
+            }
+
+            else if ("EMAIL".equalsIgnoreCase(messageType)) {
+
                 storeEmailMessage(enrichedMessage);
+
                 kafkaTemplate.send("notifications.email", enrichedMessage);
 
                 log.info("➡ Routed to EMAIL topic only");
 
-            } else {
-
-                log.warn("Unknown MessageType: {}", messageType);
             }
 
-        } catch (Exception e) {
+            else {
+
+                log.warn("Unknown MessageType: {}", messageType);
+
+            }
+
+        }
+
+        catch (Exception e) {
 
             log.error("Processing failed, triggering retry", e);
 
             throw new RuntimeException(e);
         }
     }
+
 
     // DLT HANDLER
 
@@ -116,14 +157,17 @@ public class NotificationConsumer {
 
             log.error("Message moved to DLT after retries exhausted");
 
-            // Store failed message
             storeDltMessage(payload);
 
-        } catch (Exception e) {
+        }
+
+        catch (Exception e) {
 
             log.error("Failed to store DLT message", e);
+
         }
     }
+
 
     // STORE RAW PRODUCER MESSAGE
 
@@ -140,42 +184,53 @@ public class NotificationConsumer {
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
         );
-        log.info("raw message stored in raw-events file successfully.");
+
+        log.info("Raw message stored in raw-events.log");
+
     }
 
-        private void storeSmsMessage(String payload) throws Exception {
 
-            String logEntry =
-                    "================ RAW EVENT =================\n" +
-                            "Received At: " + LocalDateTime.now() + "\n" +
-                            payload + "\n\n";
+    // STORE SMS MESSAGE
 
-            Files.writeString(
-                    Path.of("sms-events.log"),
-                    logEntry,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND
-            );
+    private void storeSmsMessage(String payload) throws Exception {
 
-        log.info("producer message stored in SMS consumer group successfully.");
+        String logEntry =
+                "================ SMS EVENT =================\n" +
+                        "Received At: " + LocalDateTime.now() + "\n" +
+                        payload + "\n\n";
+
+        Files.writeString(
+                Path.of("sms-events.log"),
+                logEntry,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+        );
+
+        log.info("Message stored in SMS consumer log");
+
     }
 
-        private void storeEmailMessage(String payload) throws Exception {
 
-            String logEntry =
-                    "================ RAW EVENT =================\n" +
-                            "Received At: " + LocalDateTime.now() + "\n" +
-                            payload + "\n\n";
+    // STORE EMAIL MESSAGE
 
-            Files.writeString(
-                    Path.of("email-events.log"),
-                    logEntry,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND
-            );
+    private void storeEmailMessage(String payload) throws Exception {
 
-            log.info("producer message stored in EMAIL consumer group successfully.");
-        }
+        String logEntry =
+                "================ EMAIL EVENT =================\n" +
+                        "Received At: " + LocalDateTime.now() + "\n" +
+                        payload + "\n\n";
+
+        Files.writeString(
+                Path.of("email-events.log"),
+                logEntry,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+        );
+
+        log.info("Message stored in EMAIL consumer log");
+
+    }
+
 
     // STORE DLT MESSAGE
 
@@ -194,5 +249,6 @@ public class NotificationConsumer {
         );
 
         log.error("DLT message stored in dlt-events.log");
+
     }
 }
